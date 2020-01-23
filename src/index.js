@@ -3,7 +3,7 @@ import bodyParser from "body-parser";
 import logger from "morgan";
 import mongoose from "mongoose";
 import passport from "passport";
-// import cors from "cors";
+import cors from "cors";
 import config from "./utils/config/config";
 import executeStrategy from "./utils/config/passport-jwt";
 import { users, posts, auth } from "./routes/index";
@@ -53,15 +53,8 @@ app.use(logger("dev"));
 // app.use(cors());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+app.use(cors());
 app.use(passport.initialize());
-app.use(function(req, res, next) {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header(
-    "Access-Control-Allow-Headers",
-    "Origin, X-Requested-With, Content-Type, Accept"
-  );
-  next();
-});
 
 /**
  *
