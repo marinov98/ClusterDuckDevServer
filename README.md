@@ -1,4 +1,4 @@
-# Heroku link :
+# Heroku link : https://cluster-duck-server.herokuapp.com/
 
 # Getting Started
 - run  `npm i` to install all dependencies
