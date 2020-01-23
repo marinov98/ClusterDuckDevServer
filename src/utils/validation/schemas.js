@@ -14,7 +14,9 @@ const registrationSchema = Joi.object({
   password: Joi.string()
     .pattern(
       // password must contain at least: one lowercase, one uppcase,one digit, and one special character and be between 6 - 24 characters.
-      new RegExp(`^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\\s).{7,25}$`)
+      new RegExp(
+        `^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\\s).{7,25}$`
+      )
     )
     .message(
       "Passwords must be between 7-25 characters and contain at least: one lowercase, one uppercase, one digit, and one special charcater"
@@ -52,7 +54,9 @@ const loginSchema = Joi.object({
     .required(),
   password: Joi.string()
     .pattern(
-      new RegExp(`^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\\s).{7,25}$`)
+      new RegExp(
+        `^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\\s).{7,25}$`
+      )
     )
     .message("Password and Email do not match")
     .required()

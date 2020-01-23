@@ -1,5 +1,10 @@
 import { model } from "mongoose";
-import { UserSchema, PostSchema, ChatMsgSchema, ChatSchema } from "./schemas/index";
+import {
+  UserSchema,
+  PostSchema,
+  ChatMsgSchema,
+  ChatSchema
+} from "./schemas/index";
 
 const User = model("User", UserSchema);
 const Post = model("Post", PostSchema);
