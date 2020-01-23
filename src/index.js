@@ -60,7 +60,9 @@ app.use(passport.initialize());
  * ROUTES
  *
  */
-
+app.get("/",(req,res,next) => {
+  res.send("Cluster Duck Server up and listening");
+})
 app.use("/api/users", users);
 app.use("/api/posts", posts);
 app.use("/api/auth", auth);
