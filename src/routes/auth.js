@@ -102,4 +102,35 @@ router.post("/login", async (req, res, next) => {
   }
 });
 
+/**
+ *  Google login endpoint
+ *  @route POST api/auth/googlelogin
+ *  @desc Login user if they exist, if not, create new user and login
+ *  @access Public
+ */
+router.post("/googlelogin", async (req, res, next) => {
+  // Check whether user in db based on email
+  try {
+    const user = await User.findOne({ email: req.body.email });
+    // if user in db...
+    // send back success and token
+    if (user)
+      return res.status(200).json({ success: true, token: req.body.token });
+
+    // if not, create user and send to save in database
+    const userToBeCreated = {
+      username: req.body.email,
+      password: req.body.password,
+      email: req.body.email,
+      firstName: req.body.firstName,
+      lastName: req.body.lastName
+    };
+
+    await User.create(userToBeCreated);
+    return res.status(201).json({ success: true, token: req.body.token });
+  } catch (err) {
+    next(err);
+  }
+});
+
 export default router;
