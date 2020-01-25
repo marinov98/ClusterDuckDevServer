@@ -50,7 +50,7 @@ router.get("/:id", async (req, res, next) => {
 
 /**
  * Get specific User by email
- * @route GET /api/users/:email
+ * @route GET /api/users/user/:email
  * @desc get user
  * @access Public
  */
@@ -66,7 +66,7 @@ router.get("/user/:email", async (req, res, next) => {
 // passport check example for reference
 /**
  * Get user after using jwt strategy
- * @route GET /api/users/authUser
+ * @route GET /api/users/auth/user
  * @desc get user
  * @access Protected
  */
