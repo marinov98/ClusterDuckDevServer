@@ -66,10 +66,10 @@ router.get("/:email", async (req, res, next) => {
 // passport check example for reference
 router.get("/authUser", (req, res, next) => {
   passport.authenticate("jwt", { session: false }, (err, user, info) => {
-    if (err) console.error(err);
+    if (err) return res.status(403).json({ error: err });
 
     if (info) {
-      res.json({ error: info.message });
+      res.status(400).json({ error: info.message });
     } else {
       return res.status(200).json({
         authenticated: true,
