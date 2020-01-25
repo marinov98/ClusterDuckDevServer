@@ -5,7 +5,7 @@ import mongoose from "mongoose";
 import passport from "passport";
 import cors from "cors";
 import config from "./utils/config/config";
-import executeStrategy from "./utils/config/passport-jwt";
+import "./utils/config/passport-jwt";
 import { users, posts, auth } from "./routes/index";
 
 /**
@@ -15,7 +15,6 @@ import { users, posts, auth } from "./routes/index";
  */
 
 const app = express();
-executeStrategy(passport);
 
 /**
  *
