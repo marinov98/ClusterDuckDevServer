@@ -5,7 +5,7 @@ import config from "./config";
 
 // show from what header to extract the jwt and what secret to use to decode it
 const options = {
-  jwtFromRequest: ExtractJwt.fromHeader("Authorization"),
+  jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken("Authorization"),
   secretOrKey: config.jwt_secret
 };
 

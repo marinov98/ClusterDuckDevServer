@@ -54,7 +54,7 @@ router.get("/:id", async (req, res, next) => {
  * @desc get user
  * @access Public
  */
-router.get("/:email", async (req, res, next) => {
+router.get("/user/:email", async (req, res, next) => {
   try {
     const targetUser = await User.findOne({ email: req.params.email });
     return res.status(200).json(targetUser);
@@ -64,25 +64,18 @@ router.get("/:email", async (req, res, next) => {
 });
 
 // passport check example for reference
-router.get("/authUser", (req, res, next) => {
-  passport.authenticate("jwt", { session: false }, (err, user, info) => {
-    if (err) return res.status(403).json({ error: err });
-
-    if (info) {
-      res.status(400).json({ error: info.message });
-    } else {
-      return res.status(200).json({
-        authenticated: true,
-        user: {
-          firstName: user.firstName,
-          lastName: user.lastName,
-          password: user.password,
-          email: user.email,
-          username: user.username
-        }
-      });
-    }
-  })(req, res, next);
-});
+/**
+ * Get user after using jwt strategy
+ * @route GET /api/users/authUser
+ * @desc get user
+ * @access Protected
+ */
+router.get(
+  "/auth/user",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    return res.status(200).json({ authenticated: true, user: req.user });
+  }
+);
 
 export default router;
