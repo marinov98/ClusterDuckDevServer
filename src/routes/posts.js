@@ -45,11 +45,11 @@ router.get("/", async (req, res, next) => {
 
 /**
  * FindAllPosts with related CS topic endpoint
- * @route GET api/posts/:topic
+ * @route GET api/posts/topics/:topic
  * Find all posts
  * @access Public
  */
-router.get("/:topic", async (req, res, next) => {
+router.get("/topics/:topic", async (req, res, next) => {
   try {
     const targetPosts = await Post.find({ csTopic: req.params.topic });
     return res.status(200).json(targetPosts);
@@ -74,10 +74,10 @@ router.get("/:id", async (req, res, next) => {
 
 /**
  * Get Single Post endpoint by the user id
- * @route GET api/posts/:userId
+ * @route GET api/posts/user/:userId
  * @access Public
  */
-router.get("/:userId", async (req, res, next) => {
+router.get("/user/:userId", async (req, res, next) => {
   try {
     const post = await Post.findOne({ poster: req.params.userId });
     return res.status(200).json(post);
