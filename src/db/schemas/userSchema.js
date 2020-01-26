@@ -31,6 +31,11 @@ export const UserSchema = new Schema({
     type: Array,
     default: []
   },
+  /** User's refresh token for authorization */
+  refreshToken: {
+    type: String,
+    default: ""
+  },
   /** User is treated as an administrator if true */
   isAdmin: {
     type: Boolean,
