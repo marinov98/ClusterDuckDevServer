@@ -21,7 +21,16 @@ const router = express.Router();
  */
 router.post("/", async (req, res, next) => {
   try {
+    // create new post
     const newPost = await Post.create(req.body);
+    await newPost.save();
+
+    // grab owner of post and update them
+    const userWhoPosted = await User.findById(req.body.userId);
+
+    userWhoPosted.posts.push(newPost);
+    await userWhoPosted.save();
+
     return res.status(201).json(newPost);
   } catch (err) {
     next(err);
