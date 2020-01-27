@@ -123,7 +123,7 @@ router.post("/login", async (req, res, next) => {
  */
 router.post("/token", async (req, res, next) => {
   try {
-    const { refreshToken } = req.body.refreshToken;
+    const { refreshToken } = req.body;
     if (!refreshToken || refreshToken === "") return res.sendStatus(401);
 
     const user = await User.findOne({ refreshToken: refreshToken });
