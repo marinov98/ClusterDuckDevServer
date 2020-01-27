@@ -1,4 +1,3 @@
-// Authentication routes
 import { Router } from "express";
 import jwt from "jsonwebtoken";
 import config from "./../utils/config/config";
