@@ -64,8 +64,22 @@ router.get("/user/:email", async (req, res, next) => {
   }
 });
 
-// passport check example for reference
 /**
+ * @desc Get all the posts of a single user
+ * @route GET /api/users/:id/posts
+ * @access Public
+ */
+router.get("/:id/posts", async (req, res, next) => {
+  try {
+    const user = await User.findById(req.params.id).populate("posts");
+    return res.status(200).json(user.posts);
+  } catch (err) {
+    next(err);
+  }
+});
+
+/**
+ * ** CAUTION ONLY WORKS WITH PEOPLE WHO LOGGED IN WITHOUT GOOGLE
  * Get user after using jwt strategy
  * @route GET /api/users/auth/user
  * @desc get user
