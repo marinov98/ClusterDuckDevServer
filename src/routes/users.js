@@ -35,7 +35,7 @@ router.get("/", async (req, res, next) => {
 });
 
 /**
- * Get specifi User by id endpoint
+ * Get specific User by id endpoint
  * @route GET /api/users/:id
  * @desc get user
  * @access Public
