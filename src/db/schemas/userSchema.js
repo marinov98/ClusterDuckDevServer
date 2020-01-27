@@ -27,10 +27,7 @@ export const UserSchema = new Schema({
     required: true
   },
   /** Array of the user's posted messages */
-  posts: {
-    type: Array,
-    default: [{ type: Schema.Types.ObjectId, ref: "Post" }]
-  },
+  posts: [{ type: Schema.Types.ObjectId, ref: "Post" }],
   /** User's refresh token for authorization */
   refreshToken: {
     type: String,

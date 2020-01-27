@@ -1,5 +1,5 @@
 // Authentication routes
-import express from "express";
+import { Router } from "express";
 import jwt from "jsonwebtoken";
 import config from "./../utils/config/config";
 import { User } from "./../db/models";
@@ -11,7 +11,8 @@ import {
   hashPasswordAndSave,
   comparePasswords
 } from "./../utils/validation/bcrypt";
-const router = express.Router();
+
+const router = Router();
 
 /**
  *  Register endpoint
