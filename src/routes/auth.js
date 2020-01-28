@@ -94,7 +94,7 @@ router.post("/login", async (req, res, next) => {
     };
 
     const accessToken = jwt.sign(payload, config.jwt_secret, {
-      expiresIn: "1h"
+      expiresIn: "15m"
     });
 
     const refreshToken = jwt.sign(payload, config.refresh_secret);
@@ -133,7 +133,7 @@ router.post("/token", async (req, res, next) => {
     jwt.verify(refreshToken, config.refresh_secret, (err, user) => {
       if (err) return res.sendStatus(403);
       const accessToken = jwt.sign(user, config.jwt_secret, {
-        expiresIn: "1h"
+        expiresIn: "15m"
       });
       // send newly made token to user
       return res.status(200).json({ newToken: accessToken });
