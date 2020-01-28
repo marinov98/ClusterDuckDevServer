@@ -135,7 +135,7 @@ router.post("/token", async (req, res, next) => {
       if (err) return res.sendStatus(403);
 
       const payload = {
-        id: user._id,
+        id: user.id,
         username: user.username,
         email: user.email,
         isAdmin: user.isAdmin,
