@@ -80,7 +80,8 @@ router.post("/login", async (req, res, next) => {
 
     const isMatch = await comparePasswords(req.body.password, user.password);
 
-    if (!isMatch) return res.status(404).json({ error: "Invalid password!" });
+    if (!isMatch)
+      return res.status(404).json({ error: "Password and email do not match" });
 
     // if passwords match, create payload and sign JWT token
     const payload = {
