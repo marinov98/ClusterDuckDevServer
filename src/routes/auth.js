@@ -134,7 +134,7 @@ router.post("/token", async (req, res, next) => {
     jwt.verify(refreshToken, config.refresh_secret, (err, user) => {
       if (err) return res.sendStatus(403);
       const accessToken = jwt.sign(user, config.jwt_secret, {
-        expiresIn: "15m"
+        expiresIn: "15s"
       });
       // send newly made token to user
       return res.status(200).json({ newToken: accessToken });
