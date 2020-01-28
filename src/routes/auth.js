@@ -95,7 +95,7 @@ router.post("/login", async (req, res, next) => {
     };
 
     const accessToken = jwt.sign(payload, config.jwt_secret, {
-      expiresIn: 30000 // 3 sec
+      expiresIn: 10000 // 10 sec
     });
 
     const refreshToken = jwt.sign(payload, config.refresh_secret);
@@ -144,7 +144,7 @@ router.post("/token", async (req, res, next) => {
         posts: user.posts
       };
       const accessToken = jwt.sign(payload, config.jwt_secret, {
-        expiresIn: 30000 // 3 sec
+        expiresIn: 10000 // 10 sec
       });
       // send newly made token to user
       return res.status(200).json({ newToken: accessToken });
