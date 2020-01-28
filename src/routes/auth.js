@@ -95,7 +95,7 @@ router.post("/login", async (req, res, next) => {
     };
 
     const accessToken = jwt.sign(payload, config.jwt_secret, {
-      expiresIn: "10s" // 10 sec
+      expiresIn: "20m" // 20 minutes
     });
 
     const refreshToken = jwt.sign(payload, config.refresh_secret);
@@ -129,11 +129,10 @@ router.post("/token", async (req, res, next) => {
 
     const user = await User.findOne({ refreshToken: refreshToken });
     if (!user) return res.sendStatus(403);
-    console.log("user found");
+
     // verify refresh token
     jwt.verify(refreshToken, config.refresh_secret, (err, user) => {
       if (err) return res.sendStatus(403);
-      console.log("token decoded");
 
       const payload = {
         id: user.id,
@@ -145,7 +144,7 @@ router.post("/token", async (req, res, next) => {
         posts: user.posts
       };
       const accessToken = jwt.sign(payload, config.jwt_secret, {
-        expiresIn: "10s" // 10 sec
+        expiresIn: "15m" // 15 minutes
       });
       // send newly made token to user
       return res.status(200).json({ newToken: accessToken });
