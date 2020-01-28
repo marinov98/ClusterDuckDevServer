@@ -129,10 +129,11 @@ router.post("/token", async (req, res, next) => {
 
     const user = await User.findOne({ refreshToken: refreshToken });
     if (!user) return res.sendStatus(403);
-
+    console.log("user found");
     // verify refresh token
     jwt.verify(refreshToken, config.refresh_secret, (err, user) => {
       if (err) return res.sendStatus(403);
+      console.log("token decoded");
 
       const payload = {
         id: user.id,
