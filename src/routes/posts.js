@@ -46,7 +46,7 @@ router.post("/", async (req, res, next) => {
  */
 router.get("/", async (req, res, next) => {
   try {
-    const allPosts = await Post.find().sort({ created: "desc" });
+    const allPosts = await Post.find().sort({ _id: -1 });
     return res.status(200).json(allPosts);
   } catch (err) {
     next(err);
