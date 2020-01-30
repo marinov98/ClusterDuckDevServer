@@ -11,7 +11,7 @@ const router = Router();
  */
 router.get("/:postId", async (req, res, next) => {
   try {
-    const post = await Post.findById(req.params.id).populate("replies");
+    const post = await Post.findById(req.params.postId).populate("replies");
 
     return res.status(200).json(post.replies);
   } catch (err) {
@@ -31,7 +31,7 @@ router.post("/", async (req, res, next) => {
     await newReply.save();
 
     // grab post and update it
-    const postToRecieveReply = await Post.findById(req.body.posterId);
+    const postToRecieveReply = await Post.findById(req.body.postId);
 
     postToRecieveReply.replies.push(newReply);
     await postToRecieveReply.save();
