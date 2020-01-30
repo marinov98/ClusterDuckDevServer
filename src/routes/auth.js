@@ -191,7 +191,7 @@ router.post("/googlelogin", async (req, res, next) => {
       return res.status(200).json({ success: true, token: req.body.token });
     // create user and send to save in database
     const userToBeCreated = {
-      username: req.body.email,
+      username: req.body.username,
       password: req.body.password,
       email: req.body.email,
       firstName: req.body.firstName,
