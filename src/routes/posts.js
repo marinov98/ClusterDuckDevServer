@@ -90,7 +90,7 @@ router.get("/:id", async (req, res, next) => {
  */
 router.get("/user/:userId", async (req, res, next) => {
   try {
-    const post = await Post.findOne({ poster: req.params.userId });
+    const post = await Post.findOne({ userId: req.params.userId });
     return res.status(200).json(post);
   } catch (err) {
     next(err);
