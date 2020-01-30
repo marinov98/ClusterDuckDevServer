@@ -6,11 +6,11 @@ import passport from "passport";
 import cors from "cors";
 import config from "./utils/config/config";
 import "./utils/config/passport-jwt";
-import { users, posts, auth } from "./routes/index";
+import { users, posts, auth, replies } from "./routes/index";
 
 /**
  *
- * EXPRESS AND PASSPORT STRATEGY
+ * EXPRESS INITIALIZATION
  *
  */
 
@@ -66,9 +66,10 @@ app.get("/", (req, res) => {
   return res.send("Cluster Duck Server up and listening");
 });
 
+app.use("/api/auth", auth);
 app.use("/api/users", users);
 app.use("/api/posts", posts);
-app.use("/api/auth", auth);
+app.use("/api/replies", replies);
 
 /**
  *

@@ -1,6 +1,7 @@
 // posts routes
 import { Router } from "express";
 import mongoose from "mongoose";
+import { checkAdmin } from "./../middleware/authorize";
 import { User, Post } from "./../db/models";
 
 const router = Router();
@@ -114,11 +115,17 @@ router.get("/:id/user", async (req, res, next) => {
  * DeletePost endpoint
  * @route DELETE api/posts/:id
  * @desc Delete a post
- * @access Public
+ * @access restricted to admins
  */
-router.delete("/:id", async (req, res, next) => {
+router.delete("/:id", checkAdmin, async (req, res, next) => {
   try {
+    const postToDelete = await Post.findById(req.params.id);
+    const user = await User.findById(postToDelete.userId);
     await Post.findByIdAndDelete(req.params.id);
+
+    user.posts = user.posts.filter(id => id !== req.params.id);
+    await user.save();
+
     return res.sendStatus(200);
   } catch (err) {
     next(err);

@@ -37,10 +37,12 @@ export const PostSchema = new Schema(
       default: "General"
     },
     /** Array of replied messages */
-    replies: {
-      type: Array,
-      default: []
-    },
+    replies: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "Reply"
+      }
+    ],
     /** Only visible to administrators if true */
     private: {
       type: Boolean,
