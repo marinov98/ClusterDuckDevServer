@@ -1,6 +1,7 @@
 import { Schema } from "mongoose";
+import bcrypt from "bcryptjs";
 
-export const UserSchema = new Schema({
+const UserSchema = new Schema({
   /** Username used for logging in */
   username: {
     type: String,
@@ -39,3 +40,12 @@ export const UserSchema = new Schema({
     default: false
   }
 });
+
+UserSchema.pre("save", async function(next) {
+  const hashedPassword = await bcrypt.hash(this.password, 12);
+  this.password = hashedPassword;
+
+  next();
+});
+
+export { UserSchema };

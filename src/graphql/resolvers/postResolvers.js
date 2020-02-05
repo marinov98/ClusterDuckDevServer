@@ -1,4 +1,4 @@
-// import { AuthenticationError } from "apollo-server";
+import { ApolloError } from "apollo-server";
 
 export default {
   Query: {
@@ -7,7 +7,7 @@ export default {
         const post = await postModel.findById(id);
         return post;
       } catch (err) {
-        console.error(err);
+        throw new ApolloError(err);
       }
     },
     postByTopic: async (parent, { csTopic }, { models: { postModel } }) => {
@@ -15,7 +15,7 @@ export default {
         const posts = await postModel.find({ csTopic: csTopic });
         return posts;
       } catch (err) {
-        console.error(err);
+        throw new ApolloError(err);
       }
     },
     posts: async (parent, args, { models: { postModel } }) => {
@@ -23,7 +23,7 @@ export default {
         const posts = await postModel.find().sort({ _id: -1 });
         return posts;
       } catch (err) {
-        console.error(err);
+        throw new ApolloError(err);
       }
     },
     userByPost: async (parent, { id }, { models: { postModel } }) => {
@@ -31,7 +31,7 @@ export default {
         const userByPost = await postModel.findById(id).populate("userId");
         return userByPost;
       } catch (err) {
-        console.error(err);
+        throw new ApolloError(err);
       }
     }
   },
@@ -47,7 +47,7 @@ export default {
 
         return newPost;
       } catch (err) {
-        console.error(err);
+        throw new ApolloError(err);
       }
     }
   }

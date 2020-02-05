@@ -3,7 +3,7 @@ import { gql } from "apollo-server";
 export default gql`
   type Post {
     id: ID!
-    userId: User!
+    userId: String!
     text: String!
     title: String
     csTopic: String!
@@ -12,16 +12,22 @@ export default gql`
     anonymity: Boolean
     upVotes: [String]
     downVotes: [String]
+  }
+  extend type Query {
+    post(id: ID!): Post!
+    postByTopic(csTopic: String!): [Post!]
+    userByPost(id: ID!): User!
+    posts: [Post!]!
+  }
 
-    extend type Query {
-        post(id: ID!): Post!
-        postByTopic(csTopic: String!): [Post!]
-        userByPost(id: ID!): User!
-        posts: [Post!]!
-    }
-
-    extend type Mutation {
-        createPost(title: String!, text: String!): Post!
-    }
+  extend type Mutation {
+    createPost(
+      title: String
+      text: String!
+      userId: String!
+      anonymity: Boolean
+      private: Boolean
+      csTopic: String
+    ): Post!
   }
 `;

@@ -5,6 +5,14 @@ import mongoose from "mongoose";
 import passport from "passport";
 import cors from "cors";
 import config from "./utils/config/config";
+import {
+  ApolloServer,
+  ApolloError,
+  AuthenticationError
+} from "apollo-server-express";
+import schemas from "./graphql/schemas";
+import resolvers from "./graphql/resolvers";
+import { User, Post, Reply } from "./db/models";
 import "./utils/config/passport-jwt";
 
 /**
@@ -56,9 +64,35 @@ app.use(passport.initialize());
 
 /**
  *
- * ROUTES
+ * GRAPHQL
  *
  */
+const server = new ApolloServer({
+  typeDefs: schemas,
+  resolvers: resolvers,
+  context: ({ req }) => {
+    if (req) {
+      return {
+        models: {
+          userModel: User,
+          postModel: Post,
+          replyModel: Reply
+        }
+      };
+    }
+  },
+  formatError: error => {
+    if (error.originalError instanceof ApolloError) {
+      return error.originalError;
+    } else if (error.originalError instanceof AuthenticationError) {
+      return error.originalError.message;
+    }
+
+    return error.message;
+  }
+});
+
+server.applyMiddleware({ app, path: "/graphql" });
 
 /**
  *
@@ -67,7 +101,9 @@ app.use(passport.initialize());
  */
 
 app.listen(config.port, () =>
-  console.log(`📡 Server up! 📡 Listening on  http://localhost:${config.port}`)
+  console.log(
+    `📡 Server up! 📡 Listening on  http://localhost:${config.port}/graphql`
+  )
 );
 
 export default app;

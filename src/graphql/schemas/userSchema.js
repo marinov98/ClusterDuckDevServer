@@ -7,18 +7,21 @@ export default gql`
     firstName: String
     lastName: String
     email: String
-    posts: [Post!]!
-    refreshToken: String
+    posts: [String!]!
+    refreshToken: Token
     isAdmin: Boolean
   }
 
   type Token {
     token: String!
+    refreshToken: String!
   }
 
   extend type Query {
     user(id: ID!): User!
-    user(email: String!): User
+    userByEmail(email: String!): User!
+    usersByStatus(isAdmin: Boolean!): [User!]!
+    userPosts(id: ID!): [Post!]!
     login(email: String!, password: String!): Token!
   }
 
@@ -29,6 +32,7 @@ export default gql`
       username: String!
       email: String!
       password: String!
+      confirmedPassword: String!
     ): User!
   }
 `;
