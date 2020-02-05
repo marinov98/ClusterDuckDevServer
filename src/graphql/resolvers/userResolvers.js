@@ -126,8 +126,78 @@ export default {
         };
 
         // await hashPasswordAndSave(userToBeCreated);
-        const user = await userModel.create(userToBeCreated);
-        return user;
+        await userModel.create(userToBeCreated);
+        return "User successfully created!";
+      } catch (err) {
+        throw new ApolloError(err);
+      }
+    },
+    googleLogin: async (parent, args, { models: { userModel } }) => {
+      try {
+        const user = await userModel.findOne({ email: args.email });
+        // if user in db...
+        // send back success and token
+        if (user) return { token: args.token };
+        // create user and send to save in database
+        const userToBeCreated = {
+          username: args.username,
+          password: args.password,
+          email: args.email,
+          firstName: args.firstName,
+          lastName: args.lastName
+        };
+
+        await userModel.create(userToBeCreated);
+        return { token: args.token };
+      } catch (err) {
+        throw new ApolloError(err);
+      }
+    },
+    refreshToken: async (
+      parent,
+      { refreshToken },
+      { models: { userModel } }
+    ) => {
+      try {
+        if (!refreshToken || refreshToken === "")
+          return new AuthenticationError("No token found", 401);
+
+        const user = await userModel.findOne({ refreshToken: refreshToken });
+        if (!user) return new AuthenticationError("Invalid User!", 403);
+
+        // verify refresh token
+        jwt.verify(refreshToken, config.refresh_secret, (err, user) => {
+          if (err) throw new AuthenticationError("Invalid refresh token!", 403);
+
+          const payload = {
+            id: user.id,
+            username: user.username,
+            email: user.email,
+            isAdmin: user.isAdmin,
+            firstName: user.firstName,
+            lastName: user.lastName,
+            posts: user.posts
+          };
+
+          const accessToken = jwt.sign(payload, config.jwt_secret, {
+            expiresIn: "15m" // 15 minutes
+          });
+
+          // send newly made token to user
+          return { token: accessToken };
+        });
+      } catch (err) {
+        new AuthenticationError(err);
+      }
+    },
+    rejectToken: async (parent, args, { models: { userModel } }) => {
+      try {
+        await userModel.findOneAndUpdate(
+          { email: args.email },
+          { refreshToken: "" }
+        );
+
+        return "refresh token successfully rejected!";
       } catch (err) {
         throw new ApolloError(err);
       }

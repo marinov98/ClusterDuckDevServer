@@ -14,7 +14,7 @@ export default gql`
 
   type Token {
     token: String!
-    refreshToken: String!
+    refreshToken: String
   }
 
   extend type Query {
@@ -33,6 +33,16 @@ export default gql`
       email: String!
       password: String!
       confirmedPassword: String!
-    ): User!
+    ): String!
+    googleLogin(
+      firstName: String!
+      lastName: String!
+      username: String!
+      email: String!
+      password: String!
+      token: String!
+    ): Token!
+    refreshToken(refreshToken: String): Token!
+    rejectToken: String!
   }
 `;
