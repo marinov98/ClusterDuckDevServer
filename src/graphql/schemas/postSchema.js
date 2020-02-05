@@ -14,9 +14,9 @@ export default gql`
     downVotes: [String]
 
     extend type Query {
-        getPost(id: ID!): Post!
-        getPostByTopic(csTopic: String!): [Post!]
-        postByUser(id: ID!): User!
+        post(id: ID!): Post!
+        postByTopic(csTopic: String!): [Post!]
+        userByPost(id: ID!): User!
         posts: [Post!]!
     }
 
