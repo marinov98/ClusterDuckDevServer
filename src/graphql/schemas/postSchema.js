@@ -4,9 +4,9 @@ export default gql`
   type Post {
     id: ID!
     userId: User!
-    text: String
+    text: String!
     title: String
-    csTopic: String
+    csTopic: String!
     replies: [Reply!]!
     private: Boolean
     anonymity: Boolean
@@ -14,8 +14,9 @@ export default gql`
     downVotes: [String]
 
     extend type Query {
-        post(id: ID!): Post!
-        post(csTopic: String!): Post!
+        getPost(id: ID!): Post!
+        getPostByTopic(csTopic: String!): [Post!]
+        postByUser(id: ID!): User!
         posts: [Post!]!
     }
 
