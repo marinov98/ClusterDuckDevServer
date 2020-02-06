@@ -1,7 +1,7 @@
 import { Strategy, ExtractJwt } from "passport-jwt";
 import { User } from "../../db/models";
 import passport from "passport";
-import config from "./config";
+import config from "./keys";
 
 // show from what header to extract the jwt and what secret to use to decode it
 const options = {

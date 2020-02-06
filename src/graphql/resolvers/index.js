@@ -1,5 +1,6 @@
-import postResolver from "./postResolvers";
-import userResolver from "./userResolvers";
-import replyResolver from "./replyResolvers";
+import authResolvers from "./authResolvers";
+import userResolvers from "./userResolvers";
+import postResolvers from "./postResolvers";
+import replyResolvers from "./replyResolvers";
 
-export default [userResolver, postResolver, replyResolver];
+export default [authResolvers, userResolvers, postResolvers, replyResolvers];

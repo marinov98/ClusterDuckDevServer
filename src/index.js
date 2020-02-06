@@ -4,7 +4,7 @@ import logger from "morgan";
 import mongoose from "mongoose";
 import passport from "passport";
 import cors from "cors";
-import config from "./utils/config/config";
+import config from "./utils/config/keys";
 import {
   ApolloServer,
   ApolloError,
