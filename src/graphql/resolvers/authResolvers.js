@@ -59,7 +59,6 @@ export default {
       }
     }
   },
-
   Mutation: {
     registerUser: async (parent, args, { models: { userModel } }) => {
       try {
