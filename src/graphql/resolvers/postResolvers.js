@@ -1,4 +1,5 @@
 import { ApolloError } from "apollo-server";
+import mongoose from "mongoose";
 
 export default {
   Query: {
@@ -46,6 +47,70 @@ export default {
         await userWhoPosted.save();
 
         return newPost;
+      } catch (err) {
+        throw new ApolloError(err);
+      }
+    },
+    likePost: async (
+      parent,
+      { id, userId },
+      { models: { postModel, userModel } }
+    ) => {
+      try {
+        const post = await postModel.findById(id);
+        const user = await userModel.findById(userId);
+        const user_id = new mongoose.Types.ObjectId(user.id);
+
+        const found = post.upVotes.find(function(element) {
+          return element.toString() === user_id.toString();
+        });
+
+        if (found) {
+          post.upVotes = post.upVotes.filter(function(element) {
+            return !(element.toString() === user_id.toString());
+          });
+        } else {
+          post.upVotes.push(user_id);
+          post.downVotes = post.downVotes.filter(function(element) {
+            return !(element.toString() === user_id.toString());
+          });
+        }
+
+        await post.save();
+
+        return "Post has been liked!";
+      } catch (err) {
+        throw new ApolloError(err);
+      }
+    },
+    dislikePost: async (
+      parent,
+      { id, userId },
+      { models: { postModel, userModel } }
+    ) => {
+      try {
+        const post = await postModel.findById(id);
+        const user = await userModel.findById(userId);
+        const user_id = new mongoose.Types.ObjectId(user.id);
+
+        const found = post.downVotes.find(function(element) {
+          return element.toString() === user_id.toString();
+        });
+
+        if (found) {
+          post.downVotes = post.downVotes.filter(function(element) {
+            return !(element.toString() === user_id.toString());
+          });
+        } else {
+          post.downVotes.push(user_id);
+          post.upVotes = post.upVotes.filter(function(element) {
+            return !(element.toString() === user_id.toString());
+          });
+        }
+
+        await post.save();
+
+        return "Post has been disliked!";
       } catch (err) {
         throw new ApolloError(err);
       }

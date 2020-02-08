@@ -29,5 +29,7 @@ export default gql`
       private: Boolean
       csTopic: String
     ): Post!
+    likePost(id: ID!, userId: String!): String!
+    dislikePost(id: ID!, userId: String!): String!
   }
 `;
