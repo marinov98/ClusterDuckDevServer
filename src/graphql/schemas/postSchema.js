@@ -13,6 +13,7 @@ export default gql`
     upVotes: [String]
     downVotes: [String]
   }
+
   extend type Query {
     post(id: ID!): Post!
     postByTopic(csTopic: String!): [Post!]

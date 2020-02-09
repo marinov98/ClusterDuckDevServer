@@ -7,6 +7,7 @@ export default gql`
     userEmail: String!
     text: String
   }
+
   extend type Query {
     postReplies(postId: String!): [Reply!]!
   }
